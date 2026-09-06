@@ -75,15 +75,14 @@ export const DICTS: Record<Lang, Dict> = {
       quotes: "Minnatdorchilik",
       gift: "Sovg'a",
     },
-    greeting: {
+       greeting: {
       heading: "Qadrli ustoz",
-      body: "Sizni 1-oktyabr — O'qituvchi va murabbiylar kuni bilan chin qalbdan tabriklaymiz! Siz bergan bilim, sabr va mehr minglab yuraklarda nur bo'lib yashaydi. Har bir darsingiz — kelajakka qo'yilgan g'isht, har bir so'zingiz — umrbod eslanadigan saboq. Sizga sog‘lik, xotirjamlik va jamiki ezgu niyatlarni tilab qolamiz!
-",
+      body: "Sizni 1-oktyabr — O'qituvchi va murabbiylar kuni bilan chin qalbdan tabriklaymiz! Siz bergan bilim, sabr va mehr minglab yuraklarda nur bo'lib yashaydi. Har bir darsingiz — kelajakka qo'yilgan g'isht, har bir so'zingiz — umrbod eslanadigan saboq. Sizga sog'lik, xotirjamlik va jamiki ezgu niyatlarni tilab qolamiz!",
       signOff: "Hurmat bilan,",
     },
     value: {
       heading: "Muallim",
-      text: "text: "Muallim\nMuallim haqida so‘zim ushbudir:\nMuallim kamolot ichra ko‘zgudir.\nO‘qidim Gerodot, tarixni ko‘p bor,\nForobiy, Danteni takror va takror.\nBarini o‘qidim, lol qoldi aqlim,\nBariga ustozsan o‘zing, muallim.\nAlisher qalbiga solgan sehr-fayz\nSensan,ey muallim, ustoz Abul-Lays.\nQutlug‘ xonadonda qutlug‘ kalom bu,\nHamid Olimjon bu, G‘afur G‘ulom bu.\nBuyuk Temur sendan topgandir ta’lim,\nSen shundoq, aziz zot, aziz muallim.\nRost aytsam, o‘zingsan eng avval daho,\nSen hayot ganjida durri bebaho.\nUlug‘ ayyomingda she’riy kalom bu,\nShogirdlar nomidan qutlug‘ salom bu.\nAbdulla Oripov",",
+      text: "Muallim haqida so'zim ushbudir:\nMuallim kamolot ichra ko'zgudir.\nO'qidim Gerodot, tarixni ko'p bor,\nForobiy, Danteni takror va takror.\nBarini o'qidim, lol qoldi aqlim,\nBariga ustozsan o'zing, muallim.\nAlisher qalbiga solgan sehr-fayz\nSensan, ey muallim, ustoz Abul-Lays.\nQutlug' xonadonda qutlug' kalom bu,\nHamid Olimjon bu, G'afur G'ulom bu.\nBuyuk Temur sendan topgandir ta'lim,\nSen shundoq, aziz zot, aziz muallim.\nRost aytsam, o'zingsan eng avval daho,\nSen hayot ganjida durri bebaho.\nUlug' ayyomingda she'riy kalom bu,\nShogirdlar nomidan qutlug' salom bu.\n\n— Abdulla Oripov",
       hint: "Yulduz yoqish uchun bosing",
       counter: (n) => `Siz ${n} ta yulduz yoqdingiz`,
     },
