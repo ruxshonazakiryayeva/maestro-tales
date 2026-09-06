@@ -46,19 +46,9 @@ WI TUGMASI: Pastki burchakda kichik, nafis "WI" belgisi — doimiy ko'rinadi, bo
 
 TEXNIK: Mobil-responsive, tez yuklanadigan (animatsiyalar performance uchun optimallashtirilgan, lazy-load rasmlar) RSVP kerak emas Supabase: faqat "greetings" jadvali (id, slug, recipient_name, sender_name, created_at) Scroll-based navigatsiya + yon tomonda kichik progress-indikator (qaysi bo'limda ekanini ko'rsatadi)
 
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/3a06b1ae-8a41-4c8f-926b-3f50b9289dba).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+You need Node.js and npm.
 
 ```sh
 git clone <this-repository-url>
@@ -66,3 +56,14 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Deploy
+
+Deployed on Vercel (preset: `vercel`, configured in `vite.config.ts`). Required
+environment variables:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
+- `SUPABASE_URL`
+- `SUPABASE_PUBLISHABLE_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` (server-only, for admin operations)

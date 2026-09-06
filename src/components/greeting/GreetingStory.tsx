@@ -407,9 +407,7 @@ function ValueSection({ t }: { t: (typeof DICTS)[Lang] }) {
     >
       <div className="relative z-10 max-w-2xl text-center text-[var(--cream)]">
         <h2 className="font-display text-3xl sm:text-5xl text-gilded">{t.value.heading}</h2>
-        <p className="mt-6 text-base leading-relaxed opacity-90">{t.value.text}</p>
-        <p className="mt-10 text-xs uppercase tracking-[0.3em] opacity-70">{t.value.hint}</p>
-        <p className="mt-2 font-hand text-2xl text-[var(--gold)]">{t.value.counter(nextId.current)}</p>
+        <p className="mt-6 text-base leading-relaxed opacity-90 whitespace-pre-line">{t.value.text}</p>
       </div>
       <AnimatePresence>
         {stars.map((s) => (

@@ -81,8 +81,8 @@ export const DICTS: Record<Lang, Dict> = {
       signOff: "Hurmat bilan,",
     },
     value: {
-      heading: "Bir ustoz ming yulduzni yoqadi",
-      text: "Ustoz — bu shunchaki kasb emas, bu qorong'ida chiroq yoqish san'ati. U bir shamni yoqadi, o'sha sham yuzta boshqa shamni yoqadi va dunyo yorishadi.",
+      heading: "Ustoz",
+      text: "Bir shamdek yonib, ming shamni yoqar,\nO'zi kamaymay, nurini boqar.\nBilim — uning qo'lida chirog',\nYurak — uning yo'lida bayroq.\n\nYillar o'tar, sinf almashar,\nLekin so'zi qalbda yashar.",
       hint: "Yulduz yoqish uchun bosing",
       counter: (n) => `Siz ${n} ta yulduz yoqdingiz`,
     },
