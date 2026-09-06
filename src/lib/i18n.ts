@@ -82,8 +82,8 @@ export const DICTS: Record<Lang, Dict> = {
       signOff: "Hurmat bilan,",
     },
     value: {
-      heading: "Ustoz",
-      text: "Bir shamdek yonib, ming shamni yoqar,\nO'zi kamaymay, nurini boqar.\nBilim — uning qo'lida chirog',\nYurak — uning yo'lida bayroq.\n\nYillar o'tar, sinf almashar,\nLekin so'zi qalbda yashar.",
+      heading: "Muallim",
+      text: "text: "Muallim\nMuallim haqida so‘zim ushbudir:\nMuallim kamolot ichra ko‘zgudir.\nO‘qidim Gerodot, tarixni ko‘p bor,\nForobiy, Danteni takror va takror.\nBarini o‘qidim, lol qoldi aqlim,\nBariga ustozsan o‘zing, muallim.\nAlisher qalbiga solgan sehr-fayz\nSensan,ey muallim, ustoz Abul-Lays.\nQutlug‘ xonadonda qutlug‘ kalom bu,\nHamid Olimjon bu, G‘afur G‘ulom bu.\nBuyuk Temur sendan topgandir ta’lim,\nSen shundoq, aziz zot, aziz muallim.\nRost aytsam, o‘zingsan eng avval daho,\nSen hayot ganjida durri bebaho.\nUlug‘ ayyomingda she’riy kalom bu,\nShogirdlar nomidan qutlug‘ salom bu.\nAbdulla Oripov",",
       hint: "Yulduz yoqish uchun bosing",
       counter: (n) => `Siz ${n} ta yulduz yoqdingiz`,
     },
