@@ -159,6 +159,7 @@ export const DICTS: Record<Lang, Dict> = {
       heading: "Дорогой учитель",
       body: "От всего сердца поздравляем Вас с 1 октября — Днём учителя и наставника! Знания, терпение и тепло, которые Вы дарите, светом живут в тысячах сердец. Каждый Ваш урок — кирпичик будущего, каждое слово — урок на всю жизнь. Желаем Вам крепкого здоровья, душевного спокойствия и исполнения всех добрых начинаний!",
       signOff: "С уважением,",
+    },
     value: {
       heading: "Muallim",
       text: "Muallim haqida so'zim ushbudir:\nMuallim kamolot ichra ko'zgudir.\nO'qidim Gerodot, tarixni ko'p bor,\nForobiy, Danteni takror va takror.\nBarini o'qidim, lol qoldi aqlim,\nBariga ustozsan o'zing, muallim.\nAlisher qalbiga solgan sehr-fayz\nSensan, ey muallim, ustoz Abul-Lays.\nQutlug' xonadonda qutlug' kalom bu,\nHamid Olimjon bu, G'afur G'ulom bu.\nBuyuk Temur sendan topgandir ta'lim,\nSen shundoq, aziz zot, aziz muallim.\nRost aytsam, o'zingsan eng avval daho,\nSen hayot ganjida durri bebaho.\nUlug' ayyomingda she'riy kalom bu,\nShogirdlar nomidan qutlug' salom bu.\n\n— Abdulla Oripov",
@@ -238,6 +239,7 @@ export const DICTS: Record<Lang, Dict> = {
       heading: "Dear Teacher",
       body: "Warmest congratulations on October 1 — Teachers' and Mentors' Day! The knowledge, patience and kindness you give live on as light in thousands of hearts. Every lesson you teach is a brick in the future; every word, a lesson for life. We wish you good health, peace of mind, and the fulfillment of every good intention!",
       signOff: "With respect,",
+    },
     value: {
       heading: "Muallim",
       text: "Muallim haqida so'zim ushbudir:\nMuallim kamolot ichra ko'zgudir.\nO'qidim Gerodot, tarixni ko'p bor,\nForobiy, Danteni takror va takror.\nBarini o'qidim, lol qoldi aqlim,\nBariga ustozsan o'zing, muallim.\nAlisher qalbiga solgan sehr-fayz\nSensan, ey muallim, ustoz Abul-Lays.\nQutlug' xonadonda qutlug' kalom bu,\nHamid Olimjon bu, G'afur G'ulom bu.\nBuyuk Temur sendan topgandir ta'lim,\nSen shundoq, aziz zot, aziz muallim.\nRost aytsam, o'zingsan eng avval daho,\nSen hayot ganjida durri bebaho.\nUlug' ayyomingda she'riy kalom bu,\nShogirdlar nomidan qutlug' salom bu.\n\n— Abdulla Oripov",
