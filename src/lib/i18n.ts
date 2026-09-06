@@ -77,7 +77,8 @@ export const DICTS: Record<Lang, Dict> = {
     },
     greeting: {
       heading: "Qadrli ustoz",
-      body: "Sizni 1-oktyabr — O'qituvchi va murabbiylar kuni bilan chin qalbdan tabriklaymiz! Siz bergan bilim, sabr va mehr minglab yuraklarda nur bo'lib yashaydi. Har bir darsingiz — kelajakka qo'yilgan g'isht, har bir so'zingiz — umrbod eslanadigan saboq. Sog'lik, quvonch va bitmas ilhom tilaymiz.",
+      body: "Sizni 1-oktyabr — O'qituvchi va murabbiylar kuni bilan chin qalbdan tabriklaymiz! Siz bergan bilim, sabr va mehr minglab yuraklarda nur bo'lib yashaydi. Har bir darsingiz — kelajakka qo'yilgan g'isht, har bir so'zingiz — umrbod eslanadigan saboq. Sizga sog‘lik, xotirjamlik va jamiki ezgu niyatlarni tilab qolamiz!
+",
       signOff: "Hurmat bilan,",
     },
     value: {
@@ -157,7 +158,7 @@ export const DICTS: Record<Lang, Dict> = {
     },
     greeting: {
       heading: "Дорогой учитель",
-      body: "От всего сердца поздравляем Вас с 1 октября — Днём учителя и наставника! Знания, терпение и тепло, которые Вы дарите, светом живут в тысячах сердец. Каждый Ваш урок — кирпичик будущего, каждое слово — урок на всю жизнь. Желаем здоровья, радости и неиссякаемого вдохновения.",
+      body: "От всего сердца поздравляем Вас с 1 октября — Днём учителя и наставника! Знания, терпение и тепло, которые Вы дарите, светом живут в тысячах сердец. Каждый Ваш урок — кирпичик будущего, каждое слово — урок на всю жизнь. Желаем Вам крепкого здоровья, душевного спокойствия и исполнения всех добрых начинаний!",
       signOff: "С уважением,",
     },
     value: {
@@ -237,7 +238,7 @@ export const DICTS: Record<Lang, Dict> = {
     },
     greeting: {
       heading: "Dear Teacher",
-      body: "Warmest congratulations on October 1 — Teachers' and Mentors' Day! The knowledge, patience and kindness you give live on as light in thousands of hearts. Every lesson you teach is a brick in the future; every word, a lesson for life. We wish you health, joy and endless inspiration.",
+      body: "Warmest congratulations on October 1 — Teachers' and Mentors' Day! The knowledge, patience and kindness you give live on as light in thousands of hearts. Every lesson you teach is a brick in the future; every word, a lesson for life. We wish you good health, peace of mind, and the fulfillment of every good intention!",
       signOff: "With respect,",
     },
     value: {
