@@ -485,7 +485,7 @@ function ValueSection({ t }: { t: (typeof DICTS)[Lang] }) {
 
   const spawn = (x: number, y: number, size: number, auto: boolean) => {
     const id = nextId.current++;
-    setStars((s) => [...s.slice(-24), { id, x, y, size, auto }]);
+    setStars((s) => [...s.slice(-60), { id, x, y, size, auto }]);
     window.setTimeout(() => setStars((s) => s.filter((st) => st.id !== id)), 2400);
   };
 
@@ -503,8 +503,10 @@ function ValueSection({ t }: { t: (typeof DICTS)[Lang] }) {
       if (!el) return;
       const w = el.clientWidth;
       const h = el.clientHeight;
-      spawn(Math.random() * w, h * (0.35 + Math.random() * 0.65), 16 + Math.random() * 20, true);
-    }, 450);
+      for (let i = 0; i < 3; i++) {
+        spawn(Math.random() * w, h * (0.3 + Math.random() * 0.7), 14 + Math.random() * 22, true);
+      }
+    }, 300);
     return () => window.clearInterval(id);
   }, [inView]);
 
