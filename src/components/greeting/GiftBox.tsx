@@ -37,6 +37,78 @@ function Confetti({ show }: { show: boolean }) {
   );
 }
 
+
+function GiftClosed({ opening }: { opening: boolean }) {
+  return (
+    <svg viewBox="0 0 240 250" className="h-full w-full overflow-visible" aria-hidden>
+      <defs>
+        <linearGradient id="gb-body" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#6d1d2e" />
+          <stop offset="0.45" stopColor="#b0475a" />
+          <stop offset="0.75" stopColor="#8f2f42" />
+          <stop offset="1" stopColor="#661a29" />
+        </linearGradient>
+        <linearGradient id="gb-lid" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#7d2335" />
+          <stop offset="0.45" stopColor="#c25468" />
+          <stop offset="0.8" stopColor="#993449" />
+          <stop offset="1" stopColor="#701f30" />
+        </linearGradient>
+        <linearGradient id="gb-gold" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#a87623" />
+          <stop offset="0.4" stopColor="#f5dc8e" />
+          <stop offset="0.65" stopColor="#d9a94a" />
+          <stop offset="1" stopColor="#9a6b1f" />
+        </linearGradient>
+        <radialGradient id="gb-knot" cx="0.35" cy="0.3" r="0.8">
+          <stop offset="0" stopColor="#fff2b8" />
+          <stop offset="1" stopColor="#b8862f" />
+        </radialGradient>
+      </defs>
+
+      <ellipse cx="120" cy="232" rx="82" ry="9" fill="#3a2a1a" opacity="0.25" />
+
+      {/* body */}
+      <rect x="42" y="114" width="156" height="110" rx="7" fill="url(#gb-body)" />
+      <rect x="108" y="114" width="24" height="110" fill="url(#gb-gold)" />
+      <rect x="42" y="114" width="156" height="16" fill="#000" opacity="0.16" />
+
+      {/* lid + bow */}
+      <motion.g
+        animate={opening ? { y: -90, rotate: -10, opacity: 0 } : { y: [0, -4, 0] }}
+        transition={
+          opening
+            ? { duration: 0.6, ease: "easeIn" }
+            : { duration: 2.6, repeat: Infinity, ease: "easeInOut" }
+        }
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      >
+        <rect x="30" y="86" width="180" height="34" rx="7" fill="url(#gb-lid)" />
+        <rect x="108" y="86" width="24" height="34" fill="url(#gb-gold)" />
+        <rect x="34" y="89" width="172" height="3" rx="1.5" fill="#fff" opacity="0.22" />
+
+        {/* bow tails */}
+        <path d="M120 84 L98 112 L110 108 L118 118 Z" fill="url(#gb-gold)" />
+        <path d="M120 84 L142 112 L130 108 L122 118 Z" fill="url(#gb-gold)" />
+        {/* bow loops */}
+        <path
+          d="M120 84 C 84 26, 42 56, 76 80 C 92 90, 112 88, 120 84 Z"
+          fill="url(#gb-gold)"
+          stroke="#9a6b1f"
+          strokeWidth="1"
+        />
+        <path
+          d="M120 84 C 156 26, 198 56, 164 80 C 148 90, 128 88, 120 84 Z"
+          fill="url(#gb-gold)"
+          stroke="#9a6b1f"
+          strokeWidth="1"
+        />
+        <circle cx="120" cy="84" r="11" fill="url(#gb-knot)" />
+      </motion.g>
+    </svg>
+  );
+}
+
 export function GiftBox({
   t,
   recipient,
@@ -47,8 +119,15 @@ export function GiftBox({
   sender: string;
 }) {
   const [opened, setOpened] = useState(false);
+  const [opening, setOpening] = useState(false);
   const [stamped, setStamped] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+
+  const openBox = () => {
+    if (opening) return;
+    setOpening(true);
+    window.setTimeout(() => setOpened(true), 600);
+  };
 
   const notify = (msg: string) => {
     setToast(msg);
@@ -82,111 +161,18 @@ export function GiftBox({
           <motion.button
             key="box"
             type="button"
-            onClick={() => setOpened(true)}
-            exit={{ scale: 0.6, opacity: 0, y: 40 }}
+            onClick={openBox}
+            exit={{ scale: 0.7, opacity: 0, y: 30 }}
             aria-label={t.gift.open}
-            className="group relative h-64 w-64 focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--gold)]/50 sm:h-72 sm:w-72"
-            style={{ perspective: 900 }}
+            className="group relative flex flex-col items-center focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--gold)]/50"
           >
-            <motion.span
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0 block"
+            <span className="block h-56 w-56 transition-transform duration-300 group-hover:scale-105 group-active:scale-95 sm:h-64 sm:w-64">
+              <GiftClosed opening={opening} />
+            </span>
+            <span
+              className="mt-2 rounded-full px-6 py-2 text-sm font-semibold tracking-wide text-[var(--ink)] shadow-[var(--shadow-soft)]"
+              style={{ background: "var(--gradient-gold)" }}
             >
-              {/* floor shadow */}
-              <span
-                aria-hidden
-                className="absolute bottom-1 left-1/2 h-5 w-44 -translate-x-1/2 rounded-[50%] blur-md"
-                style={{ background: "oklch(0.26 0.04 55 / 0.45)" }}
-              />
-
-              {/* box body */}
-              <span
-                aria-hidden
-                className="absolute bottom-6 left-1/2 h-36 w-52 -translate-x-1/2 rounded-b-[6px] rounded-t-[3px]"
-                style={{
-                  background:
-                    "linear-gradient(100deg, oklch(0.40 0.075 25) 0%, oklch(0.52 0.10 28) 22%, oklch(0.60 0.11 30) 48%, oklch(0.45 0.085 26) 78%, oklch(0.34 0.06 24) 100%)",
-                  boxShadow:
-                    "inset 0 -18px 26px oklch(0.2 0.04 25 / 0.55), inset 0 8px 14px oklch(1 0 0 / 0.12), 0 22px 34px -18px oklch(0.26 0.04 55 / 0.7)",
-                }}
-              />
-              {/* vertical ribbon on body */}
-              <span
-                aria-hidden
-                className="absolute bottom-6 left-1/2 h-36 w-9 -translate-x-1/2"
-                style={{
-                  background:
-                    "linear-gradient(90deg, oklch(0.55 0.09 85) 0%, oklch(0.86 0.13 88) 40%, oklch(0.74 0.12 82) 60%, oklch(0.5 0.085 78) 100%)",
-                  boxShadow: "0 0 10px oklch(0.74 0.12 82 / 0.5)",
-                }}
-              />
-
-              {/* lid */}
-              <motion.span
-                aria-hidden
-                className="absolute left-1/2 top-[62px] block h-12 w-60 origin-bottom -translate-x-1/2 rounded-[5px]"
-                animate={{ rotate: [0, -3, 0, 2, 0] }}
-                transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  background:
-                    "linear-gradient(100deg, oklch(0.44 0.08 25) 0%, oklch(0.58 0.105 28) 25%, oklch(0.66 0.115 30) 50%, oklch(0.48 0.09 26) 80%, oklch(0.36 0.065 24) 100%)",
-                  boxShadow:
-                    "inset 0 -10px 16px oklch(0.2 0.04 25 / 0.5), inset 0 6px 10px oklch(1 0 0 / 0.18), 0 12px 20px -10px oklch(0.26 0.04 55 / 0.6)",
-                }}
-              />
-              {/* ribbon over lid */}
-              <span
-                aria-hidden
-                className="absolute left-1/2 top-[62px] h-12 w-9 -translate-x-1/2"
-                style={{
-                  background:
-                    "linear-gradient(90deg, oklch(0.55 0.09 85) 0%, oklch(0.88 0.13 88) 40%, oklch(0.74 0.12 82) 60%, oklch(0.5 0.085 78) 100%)",
-                }}
-              />
-
-              {/* bow loops */}
-              <span
-                aria-hidden
-                className="absolute left-1/2 top-[26px] h-10 w-16 -translate-x-[105%] -rotate-[28deg] rounded-[100%_0_100%_60%]"
-                style={{
-                  background: "linear-gradient(140deg, oklch(0.88 0.13 88), oklch(0.6 0.1 78))",
-                  boxShadow: "inset 0 -6px 10px oklch(0.4 0.07 70 / 0.5)",
-                }}
-              />
-              <span
-                aria-hidden
-                className="absolute left-1/2 top-[26px] h-10 w-16 translate-x-[5%] rotate-[28deg] rounded-[0_100%_60%_100%]"
-                style={{
-                  background: "linear-gradient(220deg, oklch(0.88 0.13 88), oklch(0.6 0.1 78))",
-                  boxShadow: "inset 0 -6px 10px oklch(0.4 0.07 70 / 0.5)",
-                }}
-              />
-              {/* bow knot */}
-              <span
-                aria-hidden
-                className="absolute left-1/2 top-[50px] h-6 w-6 -translate-x-1/2 rounded-full"
-                style={{
-                  background: "radial-gradient(circle at 35% 30%, oklch(0.93 0.1 90), oklch(0.6 0.1 78))",
-                  boxShadow: "0 4px 8px oklch(0.3 0.05 60 / 0.5)",
-                }}
-              />
-
-              {/* sheen */}
-              <motion.span
-                aria-hidden
-                className="absolute bottom-6 left-1/2 h-36 w-52 -translate-x-1/2 overflow-hidden rounded-[6px]"
-              >
-                <motion.span
-                  className="absolute inset-y-0 -left-1/3 w-1/3 skew-x-12"
-                  style={{ background: "linear-gradient(90deg, transparent, oklch(1 0 0 / 0.3), transparent)" }}
-                  animate={{ x: ["0%", "420%"] }}
-                  transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 1.6, ease: "easeInOut" }}
-                />
-              </motion.span>
-            </motion.span>
-
-            <span className="absolute bottom-[-6px] left-0 right-0 text-sm font-semibold tracking-wide text-[var(--ink)]">
               {t.gift.open}
             </span>
           </motion.button>

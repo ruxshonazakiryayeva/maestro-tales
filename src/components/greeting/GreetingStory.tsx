@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { ChevronDown, KeyRound } from "lucide-react";
 import cover from "@/assets/cover.jpg";
 import memory1 from "@/assets/memory1.jpg";
 import memory2 from "@/assets/memory2.jpg";
@@ -16,24 +17,16 @@ type SectionId = (typeof SECTIONS)[number];
 function useMousePosition() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   useEffect(() => {
+    // Faqat kompyuterda (sichqoncha bor) parallax; telefonda hech narsa siljimaydi
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const onMove = (e: MouseEvent) => {
       setPos({
         x: (e.clientX / window.innerWidth - 0.5) * 2,
         y: (e.clientY / window.innerHeight - 0.5) * 2,
       });
     };
-    const onTilt = (e: DeviceOrientationEvent) => {
-      setPos({
-        x: Math.max(-1, Math.min(1, (e.gamma ?? 0) / 45)),
-        y: Math.max(-1, Math.min(1, (e.beta ?? 0) / 90)),
-      });
-    };
     window.addEventListener("mousemove", onMove);
-    window.addEventListener("deviceorientation", onTilt);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("deviceorientation", onTilt);
-    };
+    return () => window.removeEventListener("mousemove", onMove);
   }, []);
   return pos;
 }
@@ -65,6 +58,7 @@ export function GreetingStory({
   const [started, setStarted] = useState(false);
   const [active, setActive] = useState<SectionId>("intro");
   const mouse = useMousePosition();
+  const [adminOpen, setAdminOpen] = useState(false);
 
   const displayRecipient = recipient?.trim() || t.defaults.recipient;
   const displaySender = sender?.trim() || t.defaults.sender;
@@ -110,8 +104,7 @@ export function GreetingStory({
     <div ref={containerRef} className="relative min-h-screen bg-background">
       <Ambient />
       <MusicPlayer t={t} autoStart={started} />
-      <PersonalizeDialog t={t} />
-
+      <PersonalizeDialog t={t} open={adminOpen} onOpenChange={setAdminOpen} />
 
       {/* Language switcher */}
       <div className="fixed right-4 top-4 z-50 flex gap-1 rounded-full border border-[var(--gold)]/40 bg-card/70 p-1 backdrop-blur">
@@ -130,16 +123,34 @@ export function GreetingStory({
         ))}
       </div>
 
-      {/* WI button */}
-      <a
-        href="https://webinvite-six.vercel.app"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="WebInvite"
-        className="fixed bottom-5 right-20 z-50 grid h-12 w-12 place-items-center rounded-full border border-[var(--gold)]/60 bg-card/80 font-display text-sm font-bold tracking-wider text-[var(--gold-deep)] shadow-[var(--shadow-soft)] backdrop-blur transition-transform hover:scale-110"
-      >
-        WI
-      </a>
+      {/* Scroll hint */}
+      <AnimatePresence>
+        {started && active !== "gift" && (
+          <motion.button
+            key="scroll-hint"
+            type="button"
+            onClick={() => {
+              const next = SECTIONS[Math.min(SECTIONS.indexOf(active) + 1, SECTIONS.length - 1)]!;
+              scrollTo(next);
+            }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            aria-label={t.scrollHint}
+            className="fixed bottom-5 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-full border border-[var(--gold)]/60 bg-card/85 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--gold-deep)] shadow-[var(--shadow-soft)] backdrop-blur"
+          >
+            <span>{t.scrollHint}</span>
+            <motion.span
+              aria-hidden
+              animate={{ y: [0, 4, 0] }}
+              transition={{ duration: 1.3, repeat: Infinity, ease: "easeInOut" }}
+              className="-mb-0.5"
+            >
+              <ChevronDown className="h-5 w-5" />
+            </motion.span>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Progress rail */}
       <nav
@@ -171,13 +182,13 @@ export function GreetingStory({
       </nav>
 
       {/* 1. Cover */}
-      <section id="intro" className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      <section id="intro" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
         <motion.img
           src={cover}
           alt=""
           width={1920}
           height={1088}
-          style={{ y: bgY, x: mouse.x * -14 }}
+          style={{ y: bgY, x: mouse.x * -10 }}
           className="absolute inset-0 h-full w-full scale-110 object-cover"
         />
         <div className="absolute inset-0 bg-[var(--cream)]/45" />
@@ -185,8 +196,8 @@ export function GreetingStory({
           initial={{ rotateX: 85, opacity: 0 }}
           animate={{ rotateX: 0, opacity: 1 }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-          style={{ perspective: 1000, x: mouse.x * 10, y: mouse.y * 8 }}
-          className="relative z-10 mx-4 max-w-2xl rounded-2xl px-6 py-12 text-center glass-card"
+          style={{ perspective: 1000 }}
+          className="relative z-10 mx-auto w-[calc(100%-2rem)] max-w-2xl rounded-2xl px-6 py-12 text-center glass-card"
         >
           <p className="text-xs uppercase tracking-[0.4em] text-[var(--gold-deep)]">{t.cover.kicker}</p>
           <h1 className="text-gilded mt-4 font-display text-[1.55rem] leading-snug font-semibold sm:text-5xl md:text-6xl">
@@ -269,16 +280,6 @@ export function GreetingStory({
               ))}
             </button>
           </motion.div>
-          {!started && (
-            <motion.p
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 2.4, repeat: Infinity }}
-              className="mt-5 text-[11px] uppercase tracking-[0.3em] text-[var(--gold-deep)]"
-            >
-              ↓
-            </motion.p>
-          )}
-
           <p className="mt-6 text-[11px] tracking-wide text-muted-foreground">{t.cover.date}</p>
         </motion.div>
       </section>
@@ -296,8 +297,7 @@ export function GreetingStory({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8 }}
-          style={{ x: mouse.x * 6, y: mouse.y * 6 }}
-          className="glass-card relative z-10 max-w-2xl rounded-3xl p-8 text-center sm:p-12"
+          className="glass-card relative z-10 w-full max-w-2xl rounded-3xl p-8 text-center sm:p-12"
         >
           <div
             aria-hidden
@@ -367,7 +367,7 @@ export function GreetingStory({
       {/* 6. Gift */}
       <section
         id="gift"
-        className="relative flex min-h-screen flex-col items-center justify-center gap-8 px-4 py-24"
+        className="relative flex min-h-[100svh] flex-col items-center justify-center gap-8 px-4 pb-16 pt-24"
         style={{ background: "var(--gradient-dawn)" }}
       >
         <div className="relative z-10 text-center">
@@ -377,8 +377,40 @@ export function GreetingStory({
         <div className="relative z-10 w-full max-w-2xl">
           <GiftBox t={t} recipient={displayRecipient} sender={displaySender} />
         </div>
-        <footer className="relative z-10 pt-10 text-xs text-muted-foreground">
-          {t.brand} · {t.cover.date}
+        <footer className="relative z-10 flex flex-col items-center gap-6 pt-10">
+          <div className="flex items-start justify-center gap-8 sm:gap-12">
+            <a
+              href="https://webinvite-six.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-24 flex-col items-center gap-2 text-[var(--gold-deep)] transition-transform hover:scale-110"
+            >
+              <span className="font-display text-3xl font-bold leading-none tracking-wider">WI</span>
+              <span className="text-center text-xs text-muted-foreground">{t.footer.site}</span>
+            </a>
+            <a
+              href="https://t.me/webinvite_uz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-24 flex-col items-center gap-2 text-[var(--gold-deep)] transition-transform hover:scale-110"
+            >
+              <svg viewBox="0 0 24 24" className="h-8 w-8" fill="currentColor" aria-hidden>
+                <path d="M21.9 4.6 18.7 19.7c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.5 1.8 12c-1-.3-1-1 .2-1.5L20.4 3.4c.9-.3 1.6.2 1.5 1.2z" />
+              </svg>
+              <span className="text-center text-xs text-muted-foreground">{t.footer.telegram}</span>
+            </a>
+            <button
+              type="button"
+              onClick={() => setAdminOpen(true)}
+              className="flex w-24 flex-col items-center gap-2 text-[var(--gold-deep)] transition-transform hover:scale-110"
+            >
+              <KeyRound className="h-8 w-8" strokeWidth={1.8} />
+              <span className="text-center text-xs text-muted-foreground">{t.footer.admin}</span>
+            </button>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {t.brand} · {t.cover.date}
+          </p>
         </footer>
       </section>
 

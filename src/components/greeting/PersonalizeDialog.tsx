@@ -15,8 +15,16 @@ function makeSlug(name: string) {
 
 const EDIT_PASSWORD = "131700";
 
-export function PersonalizeDialog({ t }: { t: Dict }) {
-  const [open, setOpen] = useState(false);
+export function PersonalizeDialog({
+  t,
+  open,
+  onOpenChange,
+}: {
+  t: Dict;
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+}) {
+  const setOpen = onOpenChange;
   const [unlocked, setUnlocked] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
@@ -48,16 +56,6 @@ export function PersonalizeDialog({ t }: { t: Dict }) {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-label={t.personalize.title}
-        title={t.personalize.title}
-        className="fixed bottom-5 right-5 z-50 grid h-12 w-12 place-items-center rounded-full border border-gold/50 bg-card/80 text-lg shadow-[var(--shadow-soft)] backdrop-blur transition-transform hover:scale-110"
-      >
-        🔑
-      </button>
-
       <AnimatePresence>
         {open && (
           <motion.div
