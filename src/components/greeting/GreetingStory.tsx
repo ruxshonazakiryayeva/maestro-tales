@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
 import { ChevronDown, KeyRound } from "lucide-react";
 import cover from "@/assets/cover.jpg";
 import memory1 from "@/assets/memory1.jpg";
@@ -476,19 +476,42 @@ export function GreetingStory({
 }
 
 function ValueSection({ t }: { t: (typeof DICTS)[Lang] }) {
-  const [stars, setStars] = useState<{ id: number; x: number; y: number }[]>([]);
+  const [stars, setStars] = useState<
+    { id: number; x: number; y: number; size: number; auto: boolean }[]
+  >([]);
   const nextId = useRef(0);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const inView = useInView(sectionRef, { amount: 0.3 });
 
-  const addStar = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+  const spawn = (x: number, y: number, size: number, auto: boolean) => {
     const id = nextId.current++;
-    setStars((s) => [...s, { id, x: e.clientX - rect.left, y: e.clientY - rect.top }]);
-    window.setTimeout(() => setStars((s) => s.filter((st) => st.id !== id)), 1800);
+    setStars((s) => [...s.slice(-24), { id, x, y, size, auto }]);
+    window.setTimeout(() => setStars((s) => s.filter((st) => st.id !== id)), 2400);
   };
+
+  const addStar = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    spawn(e.clientX - rect.left, e.clientY - rect.top, 30, false);
+  };
+
+  // O'z-o'zidan yulduzlar chiqishi (faqat bo'lim ko'rinib turganda)
+  useEffect(() => {
+    if (!inView) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const w = el.clientWidth;
+      const h = el.clientHeight;
+      spawn(Math.random() * w, h * (0.35 + Math.random() * 0.65), 16 + Math.random() * 20, true);
+    }, 450);
+    return () => window.clearInterval(id);
+  }, [inView]);
 
   return (
     <section
       id="value"
+      ref={sectionRef}
       onClick={addStar}
       className="relative flex min-h-screen cursor-crosshair items-center justify-center overflow-hidden px-4 py-24"
       style={{ background: "var(--gradient-dusk)" }}
@@ -502,11 +525,16 @@ function ValueSection({ t }: { t: (typeof DICTS)[Lang] }) {
           <motion.span
             key={s.id}
             initial={{ opacity: 0, scale: 0, y: 0 }}
-            animate={{ opacity: [0, 1, 0], scale: [0, 1.6, 0.8], y: -80 }}
+            animate={{
+              opacity: [0, 1, 0],
+              scale: [0, 1.4, 0.7],
+              y: s.auto ? -140 : -80,
+              rotate: s.auto ? 90 : 0,
+            }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.6 }}
-            className="pointer-events-none absolute text-3xl"
-            style={{ left: s.x, top: s.y, color: "var(--gold)" }}
+            transition={{ duration: s.auto ? 2.2 : 1.6, ease: "easeOut" }}
+            className="pointer-events-none absolute"
+            style={{ left: s.x, top: s.y, fontSize: s.size, color: "var(--gold)" }}
           >
             ✦
           </motion.span>
