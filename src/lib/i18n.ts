@@ -109,9 +109,9 @@ export const DICTS: Record<Lang, Dict> = {
       certTitle: "SERTIFIKAT",
       certSubtitle: "O'qituvchi va murabbiylar kuni sharafiga",
       certBody:
-        "Siz WebInvite raqamli taklifnomalar jamoasidan istalgancha taklifnoma xaridlaringiz uchun 1 yilgacha 30% chegirmaga ega bo'ldingiz! Tabriklaymiz!",
-      to: (name) => `Kimga: ${name}`,
-      from: (name) => `Kimdan: ${name}`,
+        "Siz WebInvite raqamli taklifnomalar jamoasidan istalgancha taklifnoma xaridlaringiz uchun 1 yilgacha 50% chegirmaga ega bo'ldingiz! Tabriklaymiz!",
+      to: (name) => `Qadrli ${name}`,
+      from: (name) => `${name} nomidan `,
       promoLabel: "PROMOKOD",
       promo: "Ustoz2026",
       copied: "Nusxalandi!",
@@ -191,7 +191,7 @@ export const DICTS: Record<Lang, Dict> = {
       certTitle: "СЕРТИФИКАТ",
       certSubtitle: "В честь Дня учителя и наставника",
       certBody:
-        "Вы получили скидку 30% сроком на 1 год на любые покупки приглашений от команды цифровых приглашений WebInvite! Поздравляем!",
+        "Вы получили скидку 50% сроком на 1 год на любые покупки приглашений от команды цифровых приглашений WebInvite! Поздравляем!",
       to: (name) => `Кому: ${name}`,
       from: (name) => `От: ${name}`,
       promoLabel: "ПРОМОКОД",
@@ -273,7 +273,7 @@ export const DICTS: Record<Lang, Dict> = {
       certTitle: "CERTIFICATE",
       certSubtitle: "In honor of Teachers' and Mentors' Day",
       certBody:
-        "You have received a 30% discount for a full year on any invitation purchases from the WebInvite digital invitations team! Congratulations!",
+        "You have received a 50% discount for a full year on any invitation purchases from the WebInvite digital invitations team! Congratulations!",
       to: (name) => `To: ${name}`,
       from: (name) => `From: ${name}`,
       promoLabel: "PROMO CODE",
