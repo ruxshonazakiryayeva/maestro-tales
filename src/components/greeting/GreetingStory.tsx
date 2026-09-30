@@ -224,44 +224,100 @@ export function GreetingStory({
               type="button"
               onClick={() => {
                 setStarted(true);
-                window.setTimeout(() => scrollTo("greeting"), 80);
+                window.setTimeout(() => scrollTo("greeting"), started ? 80 : 900);
               }}
-              className="group relative grid h-36 w-36 place-items-center rounded-full focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--gold)]/50"
+              aria-label={t.cover.cta}
+              className="group relative h-44 w-40 focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--gold)]/50 rounded-md"
+              style={{ perspective: 900 }}
             >
               {/* glow */}
               <motion.span
                 aria-hidden
-                animate={{ scale: [1, 1.25, 1], opacity: [0.45, 0.1, 0.45] }}
+                animate={{ scale: [1, 1.15, 1], opacity: [0.45, 0.12, 0.45] }}
                 transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 rounded-full"
-                style={{ background: "var(--gradient-gold)", filter: "blur(18px)" }}
+                className="absolute -inset-3 rounded-full"
+                style={{ background: "var(--gradient-gold)", filter: "blur(22px)" }}
               />
-              {/* rotating dashed ring */}
-              <motion.span
-                aria-hidden
-                animate={{ rotate: 360 }}
-                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-1 rounded-full border-2 border-dashed border-[var(--gold-deep)]/70"
-              />
-              <motion.span
-                aria-hidden
-                animate={{ rotate: -360 }}
-                transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-4 rounded-full border border-[var(--gold)]/60"
-              />
-              {/* wax seal */}
+              {/* floor shadow */}
               <span
-                className="relative grid h-24 w-24 place-items-center rounded-full text-center shadow-[var(--shadow-gold)] transition-transform duration-300 group-hover:scale-105 group-active:scale-95"
-                style={{
-                  background: "var(--gradient-gold)",
-                  boxShadow:
-                    "inset 0 3px 8px oklch(1 0 0 / 0.45), inset 0 -6px 14px oklch(0.36 0.055 52 / 0.45), var(--shadow-gold)",
-                }}
+                aria-hidden
+                className="absolute -bottom-3 left-1/2 h-4 w-32 -translate-x-1/2 rounded-[50%] blur-md"
+                style={{ background: "oklch(0.26 0.04 55 / 0.45)" }}
+              />
+
+              <motion.span
+                animate={started ? { y: 0 } : { y: [0, -5, 0] }}
+                transition={{ duration: 2.8, repeat: started ? 0 : Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 block transition-transform duration-300 group-hover:scale-105 group-active:scale-95"
+                style={{ transformStyle: "preserve-3d" }}
               >
-                <span className="px-2 font-display text-sm font-bold leading-tight tracking-wide text-[var(--ink)]">
-                  {t.cover.cta}
+                {/* back cover */}
+                <span
+                  aria-hidden
+                  className="absolute inset-0 rounded-[4px_8px_8px_4px]"
+                  style={{
+                    background: "linear-gradient(135deg, oklch(0.44 0.075 50), oklch(0.3 0.05 45))",
+                    boxShadow: "var(--shadow-gold)",
+                  }}
+                />
+                {/* page block */}
+                <span
+                  aria-hidden
+                  className="absolute bottom-[6px] left-[6px] right-[3px] top-[6px] rounded-[2px_5px_5px_2px]"
+                  style={{
+                    background:
+                      "repeating-linear-gradient(180deg, oklch(0.985 0.012 88) 0 3px, oklch(0.9 0.03 85) 3px 4px)",
+                    boxShadow: "inset -6px 0 10px oklch(0.6 0.05 70 / 0.35)",
+                  }}
+                />
+                {/* first page (visible when cover is open) */}
+                <span
+                  aria-hidden
+                  className="absolute bottom-[8px] left-[10px] right-[6px] top-[8px] grid place-items-center rounded-[2px_4px_4px_2px] text-[var(--gold-deep)]"
+                  style={{ background: "oklch(0.985 0.015 90)" }}
+                >
+                  <span className="text-2xl">✦</span>
                 </span>
-              </span>
+
+                {/* front cover (opens on click) */}
+                <motion.span
+                  className="absolute inset-0 grid place-items-center rounded-[4px_8px_8px_4px]"
+                  animate={{ rotateY: started ? -158 : 0 }}
+                  transition={{ duration: 0.85, ease: [0.4, 0, 0.2, 1] }}
+                  style={{
+                    transformOrigin: "left center",
+                    transformStyle: "preserve-3d",
+                    backfaceVisibility: "hidden",
+                    background:
+                      "linear-gradient(135deg, oklch(0.8 0.125 86) 0%, oklch(0.68 0.12 78) 45%, oklch(0.55 0.11 66) 100%)",
+                    boxShadow:
+                      "inset 0 2px 6px oklch(1 0 0 / 0.45), inset 0 -8px 16px oklch(0.36 0.055 52 / 0.45)",
+                  }}
+                >
+                  {/* spine shading */}
+                  <span
+                    aria-hidden
+                    className="absolute inset-y-0 left-0 w-4 rounded-l-[4px]"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, oklch(0.36 0.06 55 / 0.55), oklch(0.36 0.06 55 / 0.05))",
+                    }}
+                  />
+                  {/* inner gold frame */}
+                  <span
+                    aria-hidden
+                    className="absolute inset-3 left-5 rounded-[3px] border border-[var(--ink)]/35"
+                  />
+                  <span className="relative flex flex-col items-center gap-2 pl-3">
+                    <span aria-hidden className="text-lg text-[var(--ink)]/70">✦</span>
+                    <span className="px-2 text-center font-display text-lg font-bold leading-tight tracking-wide text-[var(--ink)]">
+                      {t.cover.cta}
+                    </span>
+                    <span aria-hidden className="h-px w-12 bg-[var(--ink)]/40" />
+                  </span>
+                </motion.span>
+              </motion.span>
+
               {/* sparkles */}
               {[0, 1, 2, 3].map((i) => (
                 <motion.span
@@ -269,8 +325,8 @@ export function GreetingStory({
                   aria-hidden
                   className="pointer-events-none absolute text-[var(--gold-deep)]"
                   style={{
-                    left: `${[6, 86, 12, 82][i]}%`,
-                    top: `${[14, 8, 80, 76][i]}%`,
+                    left: `${[-8, 96, -4, 92][i]}%`,
+                    top: `${[8, 2, 84, 78][i]}%`,
                   }}
                   animate={{ opacity: [0, 1, 0], scale: [0.4, 1.1, 0.4] }}
                   transition={{ duration: 2.2, repeat: Infinity, delay: i * 0.55 }}
@@ -545,4 +601,3 @@ function QuotesSection({ t }: { t: (typeof DICTS)[Lang] }) {
     </section>
   );
 }
-
